@@ -264,6 +264,9 @@ public class LottieCompositionFactory {
     try {
       ZipEntry entry = inputStream.getNextEntry();
       while (entry != null) {
+        if (entry.getName().contains("../")) {
+          throw new IOException("Insecurity zip file!");
+        }
         if (entry.getName().contains("__MACOSX")) {
           inputStream.closeEntry();
         } else if (entry.getName().contains(".json")) {
